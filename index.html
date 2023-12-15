@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Task</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="shortcut icon" href="./img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="popup" id="popup">
+            <div class="box">
+                <form onsubmit="return validation()" id="form">
+                    <div class="form_text">
+                        <h3>GET $10 OFF WHEN YOU SIGN UP FOR</h3>
+                        <p>SAVINGS,NEWS,UPDATES AND MORE</p>
+                    </div>
+                    <input type="text" name="name" id="name" placeholder="Your Name" />
+                    <input type="text" name="email" id="email" placeholder="Email Address" />
+                    <div class="checkbox_div">
+                        <input type="checkbox" name="checkbox" id="checkbox" placeholder="Email Address" />
+                        <span>Check this box to receive monthly newsletter</span>
+                    </div>
+                    <input type="submit" name="submit" id="submit" value="SIGN UP" />
+                    <a href="/" class="privacy">Privacy Policy</a>
+                </form>
+
+                <div class="right_img">
+                    <img src="./img/main.png" alt="offer">
+                </div>
+
+                <div class="close" id="close"><i class="fa-solid fa-xmark"></i></div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        // // For Validation 👇👇👇
+        function validation() {
+            let name = document.getElementById("name").value;
+            let email = document.getElementById("email").value;
+            let checkbox = document.getElementById("checkbox");
+
+            if (name == "") {
+                alert("Name Field is Required");
+                return false;
+            }
+
+            if (email == "") {
+                alert("Email Field is Required");
+                return false;
+            } else if (!(email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/))) {
+                alert("Email is not Allowed...")
+                return false
+            }
+
+            if (!(checkbox.checked)) {
+                alert("Please Select Checkbox");
+                return false;
+            }
+        }
+
+        // For Storing Cookie in console 👇👇👇
+        const cookieBox = document.querySelector(".popup");
+        const close = document.querySelectorAll("#close");
+        const submit = document.querySelectorAll("#submit");
+
+        const executeCodes = () => {
+            if (document.cookie.includes("wingify")) return;
+            setTimeout(() => {
+                cookieBox.classList.add("show");
+            }, 5000);
+
+
+            close.forEach((button) => {
+                button.addEventListener("click", () => {
+                    cookieBox.classList.remove("show");
+
+                    if (button.id == "close") {
+                        //set cookies for 1 month 👉 60 sec = 1 min, 60 min = 1 hours, 24 hours = 1 day, 30 days = 1 month
+                        document.cookie = "cookieBy=wingify; max-age=" + 60 * 60 * 24 * 30;
+                    }
+                });
+            });
+
+            submit.forEach((button) => {
+                button.addEventListener("click", () => {
+                    if (button.id == "submit") {
+                        document.cookie = "cookieBy=wingify; max-age=" + 60 * 60 * 24 * 30;
+                    }
+                });
+            });
+        };
+
+        window.addEventListener("load", executeCodes);
+    </script>
+</body>
+
+</html>
